@@ -26,7 +26,7 @@ import android.database.ContentObserver;
 import android.hardware.input.InputManager;
 import android.os.BatteryStats;
 import android.os.Handler;
-import android.os.IHelloService;
+import android.os.IVehicleService;
 import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
@@ -70,40 +70,40 @@ public class VehicleService extends IVehicleService.Stub{
 	public int get_fast_reverse_state(){
 		int ret = 0;
 		ret = native_get_fast_reverse_state();
-		Slog.i(TAG, "vehicle get_fast_reverse_state[%d]",ret);
+		Slog.i(TAG, "vehicle get_fast_reverse_state=" + ret);
 		return ret;
 	}
 
 	public int get_video_signal(){
 		int ret = 0;
-		ret = native_get_fast_reverse_state();
-		Slog.i(TAG, "vehicle get_video_signal[%d]",ret);
+		ret = native_get_video_signal();
+		Slog.i(TAG, "vehicle get_video_signal="+ret);
 		return ret;
 	}
 
 	public void set_video_channel(int channel){
-		native_get_fast_reverse_state(channel);
-		Slog.i(TAG, "vehicle set_video_channel");
+		native_set_video_channel(channel);
+		Slog.i(TAG, "vehicle set_video_channel="+channel);
 	}
 
 	public void set_bt_power(int on){
-		native_get_fast_reverse_state(on);
-		Slog.i(TAG, "vehicle set_bt_power[%d]",on);
+		native_set_bt_power(on);
+		Slog.i(TAG, "vehicle set_bt_power="+on);
 	}
 
 	public void set_bt_reset(int on){
-		native_get_fast_reverse_state(on);
-		Slog.i(TAG, "vehicle bt_reset[%d]",on);
+		native_set_bt_reset(on);
+		Slog.i(TAG, "vehicle bt_reset="+on);
 	}
 
 	public void set_usb_power(int on){
-		native_get_fast_reverse_state(on);
-		Slog.i(TAG, "vehicle set_usb_power[%d]",on);
+		native_set_usb_power(on);
+		Slog.i(TAG, "vehicle set_usb_power="+on);
 	}
 
 	public void set_hub_power(int on){
-		native_get_fast_reverse_state(on);
-		Slog.i(TAG, "vehicle set_hub_power[%d]",on);
+		native_set_hub_power(on);
+		Slog.i(TAG, "vehicle set_hub_power="+on);
 	}
 
 

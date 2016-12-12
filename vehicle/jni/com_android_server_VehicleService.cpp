@@ -16,7 +16,7 @@ namespace android
 
 
 static struct vehicle_device_t * vehicle_device;
-static jint vehicle_open(JNIEnv *env, jclass clazz)
+static jint android_vehicle_open(JNIEnv *env, jclass clazz)
 {
         int ret;	
         struct hw_module_t * module;
@@ -44,13 +44,15 @@ static jint vehicle_open(JNIEnv *env, jclass clazz)
 }
 
 
-static void vehicle_close(JNIEnv *env, jclass clazz)
+static void android_vehicle_close(JNIEnv *env, jclass clazz)
 {
-	if(vehicle_device)
-        	vehicle_device->vehicle_close();	
+	if(vehicle_device){
+        	vehicle_device->vehicle_close();
+		vehicle_device->common.close((hw_device_t*)vehicle_device);	
+	}
 }
 
-static jint vehicle_get_fast_reverse_state(JNIEnv *env, jclass clazz)
+static jint android_vehicle_get_fast_reverse_state(JNIEnv *env, jclass clazz)
 {
 	jint ret = -1;
 	if(vehicle_device)
@@ -58,7 +60,7 @@ static jint vehicle_get_fast_reverse_state(JNIEnv *env, jclass clazz)
 	return ret;
 }
 
-static jint vehicle_get_video_signal(JNIEnv *env, jclass clazz)
+static jint android_vehicle_get_video_signal(JNIEnv *env, jclass clazz)
 {
 	jint ret = -1;
 	if(vehicle_device)
@@ -66,46 +68,46 @@ static jint vehicle_get_video_signal(JNIEnv *env, jclass clazz)
 	return ret;
 }
 
-static void vehicle_set_video_channel(JNIEnv *env, jclass clazz,jint channel)
+static void android_vehicle_set_video_channel(JNIEnv *env, jclass clazz,jint channel)
 {
 	if(vehicle_device)
         	vehicle_device->vehicle_set_video_channel(channel);	
 }
 
-static void vehicle_set_bt_power(JNIEnv *env, jclass clazz,jint on)
+static void android_vehicle_set_bt_power(JNIEnv *env, jclass clazz,jint on)
 {
 	if(vehicle_device)
         	vehicle_device->vehicle_set_bt_power(on);	
 }
 
-static void vehicle_set_bt_reset(JNIEnv *env, jclass clazz,jint on)
+static void android_vehicle_set_bt_reset(JNIEnv *env, jclass clazz,jint on)
 {
 	if(vehicle_device)
         	vehicle_device->vehicle_set_bt_reset(on);	
 }
 
-static void vehicle_set_usb_power(JNIEnv *env, jclass clazz,jint on)
+static void android_vehicle_set_usb_power(JNIEnv *env, jclass clazz,jint on)
 {
 	if(vehicle_device)
         	vehicle_device->vehicle_set_usb_power(on);	
 }
 
-static void vehicle_set_hub_power(JNIEnv *env, jclass clazz,jint on)
+static void android_vehicle_set_hub_power(JNIEnv *env, jclass clazz,jint on)
 {
 	if(vehicle_device)
         	vehicle_device->vehicle_set_hub_power(on);	
 }
 
 static JNINativeMethod method_table[] = {
-    { "native_open", "()I", (void*)vehicle_device_open },
-    { "native_close", "()V", (void*)vehicle_device_close },
-    { "native_get_fast_reverse_state", "()I", (void*)vehicle_get_fast_reverse_state },
-    { "native_get_video_signal", "()I", (void*)vehicle_get_video_signal },
-    { "native_set_video_channel", "(I)V", (void*)vehicle_set_video_channel },
-    { "native_set_bt_power", "(I)V", (void*)vehicle_set_bt_power },
-    { "native_set_bt_reset", "(I)V", (void*)vehicle_set_bt_reset },
-    { "native_set_usb_power", "(I)V", (void*)vehicle_set_usb_power },
-    { "native_set_hub_power", "(I)V", (void*)vehicle_set_hub_power },
+    { "native_open", "()I", (void*)android_vehicle_open },
+    { "native_close", "()V", (void*)android_vehicle_close },
+    { "native_get_fast_reverse_state", "()I", (void*)android_vehicle_get_fast_reverse_state },
+    { "native_get_video_signal", "()I", (void*)android_vehicle_get_video_signal },
+    { "native_set_video_channel", "(I)V", (void*)android_vehicle_set_video_channel },
+    { "native_set_bt_power", "(I)V", (void*)android_vehicle_set_bt_power },
+    { "native_set_bt_reset", "(I)V", (void*)android_vehicle_set_bt_reset },
+    { "native_set_usb_power", "(I)V", (void*)android_vehicle_set_usb_power },
+    { "native_set_hub_power", "(I)V", (void*)android_vehicle_set_hub_power },
 };
 
 int register_android_server_VehicleService(JNIEnv *env)
